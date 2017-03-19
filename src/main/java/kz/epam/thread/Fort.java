@@ -115,7 +115,6 @@ public class Fort extends Thread{
                         if (ship!= null && ship.isLoaded()) {
                             shipIterator.remove();
                             ocean.addShip(ship);
-                            System.out.println(getName() + " удаление корабля");
                             fortPresenation.getScheme();
                             //count++;
                         }
@@ -125,7 +124,6 @@ public class Fort extends Thread{
             if (ocean.isFinish()) {
                 finish();
                 System.out.println(getName() + " остановился");
-                fortPresenation.getScheme();
             }
         }
     }

@@ -12,7 +12,7 @@ import kz.epam.thread.Shipyard;
  */
 public class App {
     public static void main(String[] args) {
-        int totalShips = 4;
+        int totalShips = 8;
         int maximumShipsInFort = 1;
         Fort fort = new Fort("Fort 11");
         Ocean ocean = new Ocean("Ocean");

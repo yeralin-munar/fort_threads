@@ -55,20 +55,21 @@ public class Shipyard extends Thread{
                     }
                 }
 
-                if (ship == null)
+                if (ship == null) {
                     ship = fort.getShipByType(type);
+                    if (ship != null)
+                        fortPresenation.getScheme();
+                }
 
                 if (ship != null && !ship.isLoaded() && !fort.isFinish()) {
                     try {
                         ship.setAmount(0);
-                        fortPresenation.getScheme();
                         Thread.sleep(100 + ship.getCapacity() * 2);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     ship.setAmount(ship.getCapacity());
                     ship.setLoaded(true);
-                    fortPresenation.getScheme();
                 }
             }
 

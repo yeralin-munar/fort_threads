@@ -69,6 +69,6 @@ public class Ship {
 
     @Override
     public String toString(){
-        return getName() + " (type:" +getType()+"; load:"+load()+ ")" + isLoaded();
+        return getName() + " (type:" +getType()+"; load:"+load()+ ")";
     }
 }

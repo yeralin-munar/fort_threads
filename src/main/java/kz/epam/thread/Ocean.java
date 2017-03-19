@@ -101,11 +101,9 @@ public class Ocean extends Thread {
                     if (ship.isLoaded()) {
                         shipIterator.remove();
                         fortPresenation.getScheme();
-                        System.out.println(getName() + " удаление корабля");
                         removeCount++;
                     }
                 }
-                //fortPresenation.getScheme();
             }
             if ((addCount + removeCount) == (2 * limit) && ships.size() == 0){
                 finish();
