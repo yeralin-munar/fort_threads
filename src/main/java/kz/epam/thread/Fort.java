@@ -18,7 +18,7 @@ public class Fort extends Thread{
 
     private volatile List<Ship> ships = new ArrayList<Ship>();
     private Ocean ocean;
-    private volatile FortPresenation fortPresenation;
+    private FortPresenation fortPresenation;
 
     private int totalShips = DEFAULT_TOTAL_SHIPS; // Общее количество кораблей проходящи через порт
     private int limit = DEFAULT_LIMIT; // Пропускная способность порта (limit кораблей за раз)
@@ -31,10 +31,6 @@ public class Fort extends Thread{
 
     public Fort(String name){
         setName(name);
-    }
-
-    public void addShip(String name, String type, int amount, int capacity){
-        ships.add(new Ship(name, type, amount, capacity));
     }
 
     public synchronized void addShip(Ship ship){
@@ -73,10 +69,6 @@ public class Fort extends Thread{
             this.totalShips = 4;
     }
 
-    public void removeShip(Ship ship){
-        ships.remove(ship);
-    }
-
     public void setOcean(Ocean ocean){
         this.ocean = ocean;
     }
@@ -99,7 +91,7 @@ public class Fort extends Thread{
     }
 
     public void run(){
-        int count = 0;
+        //int count = 0;
         while (!finish) {
 
             if (!isFull() && !ocean.getShips().isEmpty()){
@@ -108,7 +100,7 @@ public class Fort extends Thread{
                     Ship ship = ocean.getShip();
                     if (ship != null) {
                         getShips().add(ship);
-                        count++;
+                        //count++;
                         fortPresenation.getScheme();
                     }
                 }
@@ -117,17 +109,15 @@ public class Fort extends Thread{
 
             if (ocean.isAlive()) {
                 if (!getShips().isEmpty()) {
-                    fortPresenation.getScheme();
                     Iterator<Ship> shipIterator = getShips().iterator();
                     while (shipIterator.hasNext()) {
                         Ship ship = shipIterator.next();
                         if (ship!= null && ship.isLoaded()) {
                             shipIterator.remove();
                             ocean.addShip(ship);
-                            //fortPresenation.getScheme();
                             System.out.println(getName() + " удаление корабля");
-                            count++;
-                            System.out.println(count);
+                            fortPresenation.getScheme();
+                            //count++;
                         }
                     }
                 }

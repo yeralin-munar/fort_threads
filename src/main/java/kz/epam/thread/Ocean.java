@@ -17,7 +17,7 @@ public class Ocean extends Thread {
 
     private volatile List<Ship> ships = new ArrayList<Ship>();
     private int limit = DEFAULT_LIMIT; // Максимальное количество кораблей
-    private volatile FortPresenation fortPresenation;
+    private FortPresenation fortPresenation;
 
     private boolean full = false;
     private boolean finish = false;
@@ -82,12 +82,11 @@ public class Ocean extends Thread {
                     if (rndShipCount <= (limit - addCount)) {
                         Ship ship = shipFactory.createRNDShip();
                         addShip(ship);
+                        fortPresenation.getScheme();
                         addCount++;
-                        System.out.println("ocean " + addCount);
                     }
                 }
                 try {
-                    fortPresenation.getScheme();
 
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
@@ -96,17 +95,17 @@ public class Ocean extends Thread {
             }
 
             if (!getShips().isEmpty()) {
-                fortPresenation.getScheme();
                 Iterator<Ship> shipIterator = getShips().iterator();
                 while (shipIterator.hasNext()) {
                     Ship ship = shipIterator.next();
                     if (ship.isLoaded()) {
                         shipIterator.remove();
+                        fortPresenation.getScheme();
                         System.out.println(getName() + " удаление корабля");
                         removeCount++;
-                        System.out.println("ocean " + removeCount);
                     }
                 }
+                //fortPresenation.getScheme();
             }
             if ((addCount + removeCount) == (2 * limit) && ships.size() == 0){
                 finish();

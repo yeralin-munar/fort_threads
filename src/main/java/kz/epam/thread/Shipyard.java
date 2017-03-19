@@ -8,17 +8,15 @@ import kz.epam.presentation.FortPresenation;
  *         date: 3/15/17
  */
 public class Shipyard extends Thread{
-    private String name;
     private String type;
     private Fort fort;
     private Ship ship;
-    private volatile FortPresenation fortPresenation;
+    private FortPresenation fortPresenation;
 
     private boolean finish = false;
 
     public Shipyard(String name, String type){
         setName(name);
-        this.name = name;
         this.type = type;
     }
 
@@ -44,36 +42,36 @@ public class Shipyard extends Thread{
     }
 
     public void run(){
-        //System.out.println(getName() + " работает");
         while (!finish) {
             if (fort.isFull() && fort.isAlive()) {
 
-                if (ship == null) {
-                    ship = fort.getShipByType(type);
-
-                    if (ship != null && !ship.isLoaded() && !fort.isFinish()) {
-                        try {
-                            ship.setAmount(0);
-                            Thread.sleep(100 + ship.getCapacity() * 2);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        //fortPresenation.getScheme();
-                        ship.setAmount(ship.getCapacity());
-                        ship.setLoaded(true);
-                        //ship = null;
-                    }
-                }
                 if (ship != null && ship.isLoaded()){
                     Ship shipFromFort = fort.getShipByType(type);
-                    if (shipFromFort != null){
+                    if (shipFromFort != null && !shipFromFort.isLoaded()){
                         Ship temp = ship;
                         ship = shipFromFort;
                         fort.addShip(temp);
+                        fortPresenation.getScheme();
                     }
                 }
-                //fortPresenation.getScheme();
+
+                if (ship == null)
+                    ship = fort.getShipByType(type);
+
+                if (ship != null && !ship.isLoaded() && !fort.isFinish()) {
+                    try {
+                        ship.setAmount(0);
+                        fortPresenation.getScheme();
+                        Thread.sleep(100 + ship.getCapacity() * 2);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    ship.setAmount(ship.getCapacity());
+                    ship.setLoaded(true);
+                    fortPresenation.getScheme();
+                }
             }
+
             if (!fort.isFull() && ship != null && ship.isLoaded()){
                 fort.addShip(ship);
                 ship = null;
@@ -82,7 +80,6 @@ public class Shipyard extends Thread{
             if (fort.isFinish()) {
                 finish();
                 System.out.println(getName() + " остановилась");
-                //fortPresenation.getScheme();
             }
         }
 
